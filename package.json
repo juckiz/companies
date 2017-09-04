@@ -1,0 +1,21 @@
+{
+  "name": "company-listing",
+  "version": "1.0.0",
+  "description": "Retrieve list of companies registered on a given day",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server.js",
+    "client": "node start-client.js"
+  },
+  "author": "Jukka Mäkiharju",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "hapi": "^16.5.2"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
+  }
+}
