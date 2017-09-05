@@ -83,3 +83,19 @@ Some additional modules were used for convenience
 #### Axios
 - In this project Axios was used to make HTTP request to specified external api.
 - Axios was used in previous project and was used in this one because we are dealing with asynchronous events and Axios is promise based HTTP client. Standard HTTP library doesn't support this.
+
+## In action
+- When App, now containing an empty table, has been initially rendered, the React's componentDidMount is instructed to fetch company list using fetch(). Fetch sends request to API http://localhost:3001/companies running on our Node server which then sends a HTTP request to http://avoindata.prh.fi/bis/v1?companyRegistrationFrom=2014-02-28&maxResults=1000.
+  - companyRegistrationFrom seems to be required
+  - maxResults only returns values when <= 1000, otherwise we got a Bad Request
+- JSON response is then checked and returned to App and assigned to it's state thus causing a re-render of App and the table it contains, now with data.
+- List of companies can then be filtered using DatePicker to show companies registered on given day
+  - There was a question whether the returned JSON should be parsed in server's or client's side.
+  - This app parses the JSON in client side. This is really responsive even with 1000 entries.
+  - Obviously this can become an issue when using very large dataset.
+- Only time API is called is in initial load of page and when pushing "reload"-button to reset the filter.
+  - Otherwise filtering and sorting companies is done in client's side.
+  
+### Conclusion
+This project was a good look into ReactJS as client-side app. Having used ReactJS for the first time it seemed to work just fine and had nice design decisions but at this point it is difficult to go deep into the pros and cons of said UI library.
+Once again the importance of choosing right components for the application became obvious. Designing the application before frantically diving into development is still relevant. How well this is done is obviously affected by the used technologies and developer's knowledge of them.
