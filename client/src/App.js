@@ -14,7 +14,7 @@ class App extends React.Component {
 
         this.state = {
             fullData: [], // full company list not to be modified by filtering etc.
-            data: [{    // company data filled on initial load from http://avoindata.prh.fi/ytj.html
+            data: [{    // current data displayed by table
                 businessId: '',
                 name: '',
                 registrationDate: ''
@@ -24,14 +24,14 @@ class App extends React.Component {
 
         // binding is necessary to make `this` work
         this.dateChanged = this.dateChanged.bind(this);
-        this.parseCompanyDates = this.parseCompanyDates.bind(this);
+        this.selectCompanies = this.selectCompanies.bind(this);
         this.reloadCompanies = this.reloadCompanies.bind(this);
     }
 
     // List only companies with date we are filtering
-    parseCompanyDates() {
+    selectCompanies() {
         let selectedDate = this.state.startDate;
-        let companiesList = this.state.data;
+        let companiesList = this.state.fullData;
         let selectedCompanies = [];
 
         for(let i = 0; i < companiesList.length; i++) {
@@ -48,13 +48,6 @@ class App extends React.Component {
         })
     }
 
-    // update selected date to state
-    dateChanged(date) {
-        this.setState({
-            startDate: date
-        });
-    }
-
     // reload displayed company list from unfiltered list
     reloadCompanies() {
         this.setState({
@@ -62,8 +55,7 @@ class App extends React.Component {
         });
     }
 
-    // Cache reference to 'this' outside api call
-    // https://forum.freecodecamp.org/t/react-question-cannot-read-property-setstate-of-undefined/69620/7
+    // API call to get companies
     fetchCompanies() {
         let currentComponent = this;
 
@@ -72,6 +64,13 @@ class App extends React.Component {
                 data: data,
                 fullData: data
             });
+        });
+    }
+
+    // update selected date to state
+    dateChanged(date) {
+        this.setState({
+            startDate: date
         });
     }
 
@@ -90,7 +89,7 @@ class App extends React.Component {
                             selected={this.state.startDate}
                             onChange={this.dateChanged}
                         />
-                        <button onClick={this.parseCompanyDates}>
+                        <button onClick={this.selectCompanies}>
                             Filter by date
                         </button>
                         <button onClick={this.reloadCompanies}>
@@ -100,6 +99,7 @@ class App extends React.Component {
                 </div>
                 <ReactTable
                     data = {tableData}
+                    style = {{textAlign: 'center'}}
                     columns = {[
                         {
                             Header: "Y-Tunnus",

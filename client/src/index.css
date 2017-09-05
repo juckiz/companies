@@ -1,7 +1,10 @@
 body {
-    margin: 0;
     padding: 0;
     font-family: sans-serif;
+    max-width: 900px;
+    min-width: 600px;
+    display: block;
+    margin: auto;
 }
 
 .date-select-row {
@@ -10,5 +13,7 @@ body {
 }
 
 .date-select-elements {
-    float: right;
+    display: block;
+    margin: auto;
+    width: 30%;
 }
