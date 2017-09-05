@@ -98,4 +98,4 @@ Some additional modules were used for convenience
   
 ### Conclusion
 This project was a good look into ReactJS as client-side app. Having used ReactJS for the first time it seemed to work just fine and had nice design decisions but at this point it is difficult to go deep into the pros and cons of said UI library.
-Once again the importance of choosing right components for the application became obvious. Designing the application before frantically diving into development is still relevant. How well this is done is obviously affected by the used technologies and developer's knowledge of them.
+Once again the importance of choosing right components for the application became obvious. Designing the application before frantically diving into development is still relevant. How well this is done is obviously affected by the time allotted, technologies used and how well the developer handles these.
