@@ -48,10 +48,10 @@ class App extends React.Component {
         })
     }
 
-    // reload displayed company list from unfiltered list
+    // reload displayed company list
     reloadCompanies() {
         this.setState({
-            data: this.state.fullData
+            data: this.fetchCompanies() //this.state.fullData
         });
     }
 
@@ -92,8 +92,8 @@ class App extends React.Component {
                         <button onClick={this.selectCompanies}>
                             Filter by date
                         </button>
-                        <button onClick={this.reloadCompanies}>
-                            Reset filter
+                        <button style={{float:'right'}} onClick={this.reloadCompanies}>
+                            Reload
                         </button>
                     </div>
                 </div>
@@ -102,15 +102,15 @@ class App extends React.Component {
                     style = {{textAlign: 'center'}}
                     columns = {[
                         {
-                            Header: "Y-Tunnus",
+                            Header: "Business id",
                             accessor: "businessId"
                         },
                         {
-                            Header: "Nimi",
+                            Header: "Company name",
                             accessor: "name"
                         },
                         {
-                            Header: "Rekisteröity",
+                            Header: "Registered",
                             accessor: "registrationDate"
                         },
                     ]}
