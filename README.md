@@ -1,6 +1,6 @@
 # companies
 Project contains React client and Node (hapi) server. 
-## Foreword
+## About
 ReactJS was a desired frontend and Node seemed like a logical choice for a server.
 - create-react-app project was used to create apps to have the benefits of a more complex setup. For someone new to the technology 
 project configurations can be confusing and ultimately take time from development which is why create-react-app was used.
