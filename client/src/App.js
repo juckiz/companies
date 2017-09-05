@@ -1,151 +1,125 @@
 import React from 'react';
 import Client from "./Client";
-import { render } from "react-dom";
-//import ReactDOM from 'react-dom';
-//import './index.css';
+
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
-
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
+
 import moment from 'moment';
 
 class App extends React.Component {
+    constructor() {
+        super();
 
-  constructor() {
-    console.log("constructor");
-    super();
+        this.state = {
+            fullData: [], // full company list not to be modified by filtering etc.
+            data: [{    // company data filled on initial load from http://avoindata.prh.fi/ytj.html
+                businessId: '',
+                name: '',
+                registrationDate: ''
+            }],
+            startDate: moment() // selected date to show companies
+        };
 
-    // Set initial value to get around async
-    this.state = {
-        fullData: [], // Original, full company list not to be modified by filtering etc.
-        data: [{    // empty data later filled from http://avoindata.prh.fi/ytj.html
-          businessId: '',
-          name: '',
-          registrationDate: ''
-        }],
-        startDate: moment() // selected date to show companies
-    };
+        // binding is necessary to make `this` work
+        this.dateChanged = this.dateChanged.bind(this);
+        this.parseCompanyDates = this.parseCompanyDates.bind(this);
+        this.reloadCompanies = this.reloadCompanies.bind(this);
+    }
 
-    // This binding is necessary to make `this` work like in handleClick
-    //this.companiesForDate = this.companiesForDate.bind(this);
-    this.dateChanged = this.dateChanged.bind(this);
-    this.parseCompanyDates = this.parseCompanyDates.bind(this);
-    this.reloadCompanies = this.reloadCompanies.bind(this);
-  }
+    // List only companies with date we are filtering
+    parseCompanyDates() {
+        let selectedDate = this.state.startDate;
+        let companiesList = this.state.data;
+        let selectedCompanies = [];
 
-  // TODO move to API component
-  // List only companies with date we are filtering
-  parseCompanyDates() {
-      console.log("parse companies JSON");
-      let selectedDate = this.state.startDate;
-      let companiesList = this.state.data;
-      let selectedCompanies = [];
+        for(let i = 0; i < companiesList.length; i++) {
+            let obj = companiesList[i];
+            // https://momentjs.com/docs/#/query/is-same/
+            if(moment(selectedDate).isSame(obj.registrationDate, 'day')) {
+                selectedCompanies.push(obj);
+            }
+        }
 
-      for(let i = 0; i < companiesList.length; i++) {
-          let obj = companiesList[i];
-          // This is kind of crappy... https://momentjs.com/docs/#/query/is-same/
-          if(moment(selectedDate).isSame(obj.registrationDate, 'day')) {
-              selectedCompanies.push(obj);
-          }
-      }
+        // Populate table data with only filtered values
+        this.setState({
+            data: selectedCompanies
+        })
+    }
 
-      // Populate table data with only filtered values
-      this.setState({
-          data: selectedCompanies
-      })
-  }
+    // update selected date to state
+    dateChanged(date) {
+        this.setState({
+            startDate: date
+        });
+    }
 
-  // date changes with DatePicker when selecting from calendar
-  dateChanged(date) {
-    this.setState({
-      startDate: date
-    });
-  }
+    // reload displayed company list from unfiltered list
+    reloadCompanies() {
+        this.setState({
+            data: this.state.fullData
+        });
+    }
 
-  // reload displayed company list from originally populated list
-  reloadCompanies() {
-      this.setState({
-        data: this.state.fullData
-      });
-  }
-
-  fetchCompanies() {
     // Cache reference to 'this' outside api call
-    // Calling 'this' inside api callback doesn't work
     // https://forum.freecodecamp.org/t/react-question-cannot-read-property-setstate-of-undefined/69620/7
-    // Arrow functions should work????
-    let currentComponent = this;
-    fetch('/companies', {
-      accept: "application/json"
-    })
-      .then(
-        function(response) {
-          if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-              response.status);
-            return;
-          }
-          response.json().then((data) => {
-            console.log("companies fetched");
+    fetchCompanies() {
+        let currentComponent = this;
+
+        Client.getCompanies(function(data) {
             currentComponent.setState({
-                data: data
-            });
-            currentComponent.setState({
+                data: data,
                 fullData: data
             });
-          });
-        }
-      )
-      .catch(function(err) {
-        console.log('Fetch Error :-S', err);
-      });
-  }
+        });
+    }
 
-  componentDidMount(){
-    // Get ALL companies
-    // TODO move to API component
-    this.fetchCompanies();
-  }
+    componentDidMount(){
+        this.fetchCompanies();
+    }
 
-  render() {
-    console.log("render");
-    const { data } = this.state;
-    return (
-      <div>
-      <DatePicker
-              dateFormat="YYYY/MM/DD"
-              selected={this.state.startDate}
-              onChange={this.dateChanged}
-          />
-      <button onClick={this.parseCompanyDates}>
-        Filter by date
-      </button>
-      <button onClick={this.reloadCompanies}>
-        Reset filter
-      </button>
-        <ReactTable
-          data={data}
-          columns={[
-            {
-              Header: "Y-Tunnus",
-              accessor: "businessId"
-            },
-            {
-              Header: "Nimi",
-              accessor: "name"
-            },
-            {
-              Header: "Rekisteröity",
-              accessor: "registrationDate"
-            },
-          ]}
-          defaultPageSize={20}
-          className="-striped -highlight"
-        />
-        <br />
-      </div>
-    );
-  }
+    render() {
+        const tableData = this.state.data;
+        return (
+            <div>
+                <div className="date-select-row">
+                    <div className="date-select-elements">
+                        <DatePicker
+                            dateFormat="DD.MM.YYYY"
+                            selected={this.state.startDate}
+                            onChange={this.dateChanged}
+                        />
+                        <button onClick={this.parseCompanyDates}>
+                            Filter by date
+                        </button>
+                        <button onClick={this.reloadCompanies}>
+                            Reset filter
+                        </button>
+                    </div>
+                </div>
+                <ReactTable
+                    data = {tableData}
+                    columns = {[
+                        {
+                            Header: "Y-Tunnus",
+                            accessor: "businessId"
+                        },
+                        {
+                            Header: "Nimi",
+                            accessor: "name"
+                        },
+                        {
+                            Header: "Rekisteröity",
+                            accessor: "registrationDate"
+                        },
+                    ]}
+                    defaultPageSize = {20}
+                    className = "-striped -highlight"
+                />
+                <br />
+            </div>
+        );
+    }
 }
 export default App;

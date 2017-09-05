@@ -4,6 +4,6 @@ import App from "./App";
 import "./index.css";
 
 ReactDOM.render(
-  <App />,
-  document.getElementById("root") // eslint-disable-line no-undef
+    <App />,
+    document.getElementById("root")
 );
