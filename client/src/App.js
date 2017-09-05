@@ -51,7 +51,7 @@ class App extends React.Component {
     // reload displayed company list
     reloadCompanies() {
         this.setState({
-            data: this.fetchCompanies() //this.state.fullData
+            data: this.fetchCompanies()
         });
     }
 
