@@ -13,7 +13,8 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2",
-    "hapi": "^16.5.2"
+    "hapi": "^16.5.2",
+    "inert": "^4.2.1"
   },
   "devDependencies": {
     "concurrently": "^3.5.0"
