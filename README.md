@@ -4,7 +4,9 @@ Project contains React client and Node (hapi) server.
 ReactJS was a desired frontend and Node seemed like a logical choice for a server.
 - create-react-app project was used to create apps to have the benefits of a more complex setup. For someone new to the technology 
 project configurations can be confusing and ultimately take time from development which is why create-react-app was used.
-- Node with Express was more familiar technology but we went with [hapi]( https://hapijs.com/) framework. This project doesn't take full advantage of hapi's potential due to it's small scale. E.g. this was not split between several team members. 
+- Node was also used because it works well in more I/O heavy systems like those doing database queries
+  - Also using JavaScript across used technologies unifies the language and data format (JSON) which has obvious benefits in development.
+- Node with Express was more familiar technology but we went with [hapi]( https://hapijs.com/) framework. This project doesn't take full advantage of hapi's potential due to it's small scale. E.g. development was not split between several team members. 
   - One could argue Express would have been as good a choice.
   - Previous experience with Node (Express) however translated directly to hapi.
 - [This useful guide](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/) provided a lot of information how to proceed in very similar environment with React and Node.
