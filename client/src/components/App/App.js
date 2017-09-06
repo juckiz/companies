@@ -1,5 +1,5 @@
 import React from 'react';
-import Client from "./Client";
+import Client from "../Client/Client";
 
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
