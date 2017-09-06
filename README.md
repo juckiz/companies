@@ -101,5 +101,6 @@ Some additional modules were used for convenience
   - Otherwise filtering and sorting companies is done in client's side.
 
 ### Conclusion
-This project was a good look into ReactJS as client-side app. Having used ReactJS for the first time it seemed to work just fine and had nice design decisions but at this point it is difficult to go deep into the pros and cons of said UI library.
-Once again the importance of choosing right components for the application became obvious. Designing the application before frantically diving into development is still relevant. How well this is done is obviously affected by the time allotted, technologies used and how well the developer handles these.
+This project was a good look into ReactJS as client-side app. Having used ReactJS for the first time it seemed to work just fine but at this point it is difficult to go deep into the pros and cons of this UI library.
+I learned a lot doing this project. Obviously ReactJS was a new technology and I feel I now have a basic understanding to build on. I also learned more about NPM and dependency management and in general I have deeper understanding about web development.
+Once again the importance of choosing right components for the application became obvious. Designing the application before frantically diving into development is crucial.
