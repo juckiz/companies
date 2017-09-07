@@ -1,5 +1,6 @@
 import React from 'react';
 import Client from "../Client/Client";
+import Helper from "../Helper/Helper";
 
 import 'react-table/react-table.css';
 import ReactTable from 'react-table';
@@ -30,22 +31,16 @@ class App extends React.Component {
 
     // List only companies with date we are filtering
     selectCompanies() {
+        let currentComponent = this;
         let selectedDate = this.state.startDate;
         let companiesList = this.state.fullData;
         let selectedCompanies = [];
 
-        for(let i = 0; i < companiesList.length; i++) {
-            let obj = companiesList[i];
-            // https://momentjs.com/docs/#/query/is-same/
-            if(moment(selectedDate).isSame(obj.registrationDate, 'day')) {
-                selectedCompanies.push(obj);
-            }
-        }
+        selectedCompanies = Helper.parseCompaniesJSON(companiesList, selectedDate);
 
-        // Populate table data with only filtered values
-        this.setState({
+        currentComponent.setState({
             data: selectedCompanies
-        })
+        });
     }
 
     // reload displayed company list
