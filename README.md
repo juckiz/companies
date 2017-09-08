@@ -94,13 +94,15 @@ Some additional modules were used for convenience
   - maxResults only returns values when <= 1000, otherwise we got a Bad Request
 - JSON response is then checked and returned to App and assigned to it's state thus causing a re-render of App and the table it contains, now with data.
 - List of companies can then be filtered using DatePicker to show companies registered on given day
+  - For the sake of UX it was important to filter results when selecting a date from calendar instead of pushing a button. This was changed after the initial design.
   - There was a question whether the returned JSON should be parsed in server's or client's side.
-  - This app parses the JSON in client side. This is really responsive even with 1000 entries.
-  - Obviously this can become an issue when using very large dataset.
+  - This app parses the JSON in client side. This is really responsive even with 1000 entries. As far as user experience goes
+  this seems like a good choice.
+  - Obviously this can become an issue when using very large dataset. Then again parsing on server side will tie up resources there. This could introduce problems with large number of requests occurring simultaneously.
 - Only time API is called is in initial load of page and when pushing "reload"-button to reset the filter.
   - Otherwise filtering and sorting companies is done in client's side.
 
 ### Conclusion
 This project was a good look into ReactJS as client-side app. Having used ReactJS for the first time it seemed to work just fine but at this point it is difficult to go deep into the pros and cons of this UI library.
 I learned a lot doing this project. Obviously ReactJS was a new technology and I feel I now have a basic understanding to build on. I also learned more about NPM and dependency management and in general I have deeper understanding about web development.
-Once again the importance of choosing right components for the application became obvious. Designing the application before frantically diving into development is crucial.
+Once again the importance of choosing right components for the application became obvious. Designing the application before frantically diving into development is crucial. Otherwise it will lead to refactoring code which isn't really a problem if you have time.
