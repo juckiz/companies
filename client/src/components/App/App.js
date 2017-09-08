@@ -62,11 +62,14 @@ class App extends React.Component {
         });
     }
 
-    // update selected date to state
+    // update selected date to state on selecting date
     dateChanged(date) {
         this.setState({
             startDate: date
+        }, function() {
+            this.selectCompanies();
         });
+
     }
 
     componentDidMount() {
@@ -77,17 +80,18 @@ class App extends React.Component {
         const tableData = this.state.data;
         return (
             <div>
+                <div clasName="header-row"><span className="h1">Registered companies</span></div>
                 <div className="date-select-row">
                     <div className="date-select-elements">
-                        <DatePicker
-                            dateFormat="DD.MM.YYYY"
-                            selected={this.state.startDate}
-                            onChange={this.dateChanged}
-                        />
-                        <button onClick={this.selectCompanies}>
-                            Filter by date
-                        </button>
-                        <button style={{float:'right'}} onClick={this.reloadCompanies}>
+                        <div className="date-label">Filter by date</div>
+                        <div className="date-picker">
+                            <DatePicker
+                                dateFormat="DD.MM.YYYY"
+                                selected={this.state.startDate}
+                                onChange={this.dateChanged}
+                            />
+                        </div>
+                        <button onClick={this.reloadCompanies}>
                             Reload
                         </button>
                     </div>

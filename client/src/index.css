@@ -15,5 +15,28 @@ body {
 .date-select-elements {
     display: block;
     margin: auto;
-    width: 19%;
+    width: 46%;
+}
+
+.date-label {
+    display: inline-block;
+    font-size: 14px;
+    padding-right: 5px;
+}
+
+.date-picker {
+  display: inline-block;
+}
+
+.header-row {
+    width: 100%;
+}
+
+.h1 {
+    font-size: 30px;
+    font-weight: bold;
+    display: block;
+    width: 36%;
+    margin: auto;
+    padding-bottom: 5px;
 }
